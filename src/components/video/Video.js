@@ -11,12 +11,17 @@ export const Video = forwardRef((prop, videoRef) => {
     const [error, setError] = useState(false);
     const {loading, play} = useSelector(state => state);
     const dispatch = useDispatch();
+    const [control, setControl]=useState(false);
+
+    useEffect(()=>{
+        setControl(false);
+    },[])
 
     useEffect(() => {
         getVideo()
             .then(onVideoLoaded)
             .then(() => {
-                dispatch(loadingAction(false))
+                dispatch(loadingAction(true))
             })
             .catch(onError)
 
@@ -51,6 +56,8 @@ export const Video = forwardRef((prop, videoRef) => {
                         ref={videoRef}
                         onTimeUpdate={updateCurrentTime}
                         onLoadedMetadata={updateDuration}
+                        playsinline
+                        controls={control}
                     >
                         <source src={videoInfo.url} type={`video/${videoInfo.format}`}/>
                     </VideoLayer>
