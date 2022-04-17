@@ -5,3 +5,7 @@ export const ARROW_RIGHT = 'ArrowRight';
 export const SPACE = ' ';
 export const REWIND_TIME = 5;
 export const KEY_BOARD_ACTION = 'keydown';
+export const FULL_SCREEN_CHANGE = 'fullscreenchange';
+export const MOZ_FULL_SCREEN_CHANGE = 'mozfullscreenchange';
+export const WEB_KIT_FULL_SCREEN_CHANGE = 'webkitfullscreenchange';
+export const ONE_HUNDRED_PROCENT_NUMBER = 100;

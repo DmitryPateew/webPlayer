@@ -1,4 +1,4 @@
-import {ACTIVE_SOUND, CURRENT_TIME, DURATION, LOADING, PLAY, REWIND, SOUND_VALUE, STOP} from "./actions";
+import {ACTIVE_SOUND, CURRENT_TIME, DURATION, FULL_SCREEN, LOADING, PLAY, REWIND, SOUND_VALUE, STOP} from "./actions";
 
 export const playAction = () => ({
     type: PLAY
@@ -34,4 +34,9 @@ export const durationAction = (payload) => ({
 
 export const rewindAction = () => ({
     type: REWIND
+})
+
+export const fullScreenAction = (payload) => ({
+    type: FULL_SCREEN,
+    payload
 })

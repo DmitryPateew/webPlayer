@@ -6,8 +6,8 @@ export const Sound = () => {
     const {activeSound, soundValue} = useSelector(state => state);
     const dispatch = useDispatch();
 
-    const updateSound = (evt) => {
-        dispatch(setSoundValue(evt.target.value))
+    const updateSound = ({target: {value}}) => {
+        dispatch(setSoundValue(value))
     }
 
     return (
@@ -22,7 +22,9 @@ export const Sound = () => {
                        max="1"
                        step="0.01"
                 />}
-            <SoundButton soundValue={soundValue} onClick={() => dispatch(setSoundValue(soundValue ? 0 : 1))}/>
+            <SoundButton
+                soundValue={soundValue}
+                onClick={() => dispatch(setSoundValue(soundValue ? 0 : 1))}/>
         </SoundWrapper>
     )
 }

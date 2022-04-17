@@ -1,15 +1,5 @@
-import {ACTIVE_SOUND, CURRENT_TIME, DURATION, LOADING, PLAY, REWIND, SOUND_VALUE, STOP} from "./actions";
-
-const initialState = {
-    play: false,
-    stop: false,
-    activeSound: false,
-    soundValue: 1,
-    loading: true,
-    currentTime: 0,
-    duration: 0,
-    rewind: false
-};
+import {ACTIVE_SOUND, CURRENT_TIME, DURATION, FULL_SCREEN, LOADING, PLAY, REWIND, SOUND_VALUE, STOP} from "./actions";
+import {initialState} from "./initialState";
 
 export const reducer = (state = initialState, {type, payload}) => {
     switch (type) {
@@ -29,6 +19,8 @@ export const reducer = (state = initialState, {type, payload}) => {
             return {...state, duration: payload}
         case REWIND:
             return {...state, rewind: !state.rewind}
+        case FULL_SCREEN:
+            return {...state, fullScreen: payload}
         default:
             return state;
     }

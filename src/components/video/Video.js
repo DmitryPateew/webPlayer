@@ -1,6 +1,6 @@
 import {forwardRef, useEffect, useState} from "react";
 import {getVideo} from "../../httpService/httpService";
-import {currentTimeAction, durationAction, loadingAction, playAction} from "../../redux/actionCreator";
+import {currentTimeAction, durationAction, loadingAction, playAction, setSoundValue} from "../../redux/actionCreator";
 import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../spinner/Spinner";
 import {ErrorMessage} from "../errorMessage/ErrorMessage";
@@ -9,13 +9,8 @@ import {Overlay, VideoLayer, VideoWrapper} from "./videoStyle";
 export const Video = forwardRef((prop, videoRef) => {
     const [videoInfo, setVideoInfo] = useState({});
     const [error, setError] = useState(false);
-    const {loading, play} = useSelector(state => state);
+    const {loading, play, fullScreen} = useSelector(state => state);
     const dispatch = useDispatch();
-    const [control, setControl]=useState(false);
-
-    useEffect(()=>{
-        setControl(false);
-    },[])
 
     useEffect(() => {
         getVideo()
@@ -36,12 +31,21 @@ export const Video = forwardRef((prop, videoRef) => {
         setError(true);
     }
 
-    const updateCurrentTime = ({target: {currentTime}}) => {
+    const updateCurrentTimeVolume = ({target: {currentTime}}) => {
         dispatch(currentTimeAction(currentTime));
     }
 
     const updateDuration = ({target: {duration}}) => {
-        dispatch(durationAction(duration))
+        dispatch(durationAction(duration));
+    }
+
+    const updateVolume = ({target: {volume, muted}}) => {
+        if (fullScreen) {
+            dispatch(setSoundValue(volume));
+            if (muted) {
+                dispatch(setSoundValue(0));
+            }
+        }
     }
 
     return (
@@ -50,14 +54,22 @@ export const Video = forwardRef((prop, videoRef) => {
             {error && <ErrorMessage/>}
             {!loading && !error &&
                 <>
-                    {!play && <Overlay/>}
+                    {!play &&
+                        <Overlay
+                            onClick={() => {
+                                dispatch(playAction())
+                            }}/>
+                    }
                     <VideoLayer
-                        onClick={() => dispatch(playAction())}
+                        onClick={() => {
+                            dispatch(playAction())
+                        }}
                         ref={videoRef}
-                        onTimeUpdate={updateCurrentTime}
+                        onTimeUpdate={updateCurrentTimeVolume}
                         onLoadedMetadata={updateDuration}
+                        onVolumeChange={updateVolume}
+                        controls={fullScreen}
                         playsinline
-                        controls={control}
                     >
                         <source src={videoInfo.url} type={`video/${videoInfo.format}`}/>
                     </VideoLayer>

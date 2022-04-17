@@ -6,3 +6,4 @@ export const LOADING = 'LOADING';
 export const CURRENT_TIME = 'CURRENT_TIME';
 export const DURATION = 'DURATION';
 export const REWIND = 'REWIND';
+export const FULL_SCREEN = 'FULL_SCREEN';

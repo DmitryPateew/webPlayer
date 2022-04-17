@@ -6,8 +6,15 @@ import {PlayButton} from "../playButton/PlayButton";
 import {Time} from "../time/Time";
 import {StopButton} from "../stopButton/StopButton";
 import {ControlWrapper, GroupWrapper} from "./controlStyle";
-import {playAction} from "../../redux/actionCreator";
-import {ARROW_LEFT, ARROW_RIGHT, KEY_BOARD_ACTION, REWIND_TIME, SPACE} from "../../constant/constant";
+import {fullScreenAction, playAction} from "../../redux/actionCreator";
+import {
+    ARROW_LEFT,
+    ARROW_RIGHT,
+    FULL_SCREEN_CHANGE,
+    KEY_BOARD_ACTION, MOZ_FULL_SCREEN_CHANGE,
+    REWIND_TIME,
+    SPACE, WEB_KIT_FULL_SCREEN_CHANGE
+} from "../../constant/constant";
 
 export const Control = ({videoRef}) => {
     const {
@@ -47,7 +54,7 @@ export const Control = ({videoRef}) => {
     }, [rewind, videoRef])
 
     useEffect(() => {
-        const onkeydown = ({key}) => {
+        const onKeyDown = ({key}) => {
             if (key === ARROW_LEFT) {
                 videoRef.current.currentTime = currentTime - REWIND_TIME;
             }
@@ -59,11 +66,27 @@ export const Control = ({videoRef}) => {
             }
         }
 
-        document.addEventListener(KEY_BOARD_ACTION, onkeydown);
+        const exitHandler = () => {
+            if (!document.webkitIsFullScreen
+                && !document.mozFullScreen &&
+                !document.msFullscreenElement) {
+                dispatch(fullScreenAction(false));
+                videoRef.current.muted = false;
+            }
+        }
+
+        document.addEventListener(KEY_BOARD_ACTION, onKeyDown);
+        document.addEventListener(FULL_SCREEN_CHANGE, exitHandler, false);
+        document.addEventListener(MOZ_FULL_SCREEN_CHANGE, exitHandler, false);
+        document.addEventListener(WEB_KIT_FULL_SCREEN_CHANGE, exitHandler, false);
 
         return () => {
-            document.removeEventListener(KEY_BOARD_ACTION, onkeydown);
+            document.removeEventListener(KEY_BOARD_ACTION, onKeyDown);
+            document.removeEventListener(FULL_SCREEN_CHANGE, exitHandler);
+            document.removeEventListener(MOZ_FULL_SCREEN_CHANGE, exitHandler);
+            document.removeEventListener(WEB_KIT_FULL_SCREEN_CHANGE, exitHandler);
         };
+
     }, [currentTime]);
 
     useEffect(() => {
