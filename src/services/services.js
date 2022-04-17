@@ -7,10 +7,6 @@ export const formatTime = (seconds) => {
         : moment(seconds * 1000).format('hh:mm:ss');
 }
 
-export const getProgressWidth = (currentTime, duration) => {
-    return (currentTime / duration) * 100;
-}
-
 export const enableFullScreen = (element) => {
     const {userAgent} = navigator;
 
