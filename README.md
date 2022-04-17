@@ -15,12 +15,19 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 #Following functions were implemented:
+
 ##⁃  Play: by clicking on play icon on a control panel, space key and click on any place of a video;
+
 ##⁃ Stop: by clicking on Stop icon on the control panel;
+
 ##⁃ Volume: by changing a position of volume icon on the control panel;
+
 ##⁃ Playing video in full screen mode: web and mobile;
+
 ##⁃ Rewind: by clicking on progress bar or using right and left arrows;
+
 **Please to use player in Safari enable All Auto-play settings via Settings 
+
 -> Allow All Auto-Play**
 
 ###Deployed project: [https://webplayer12.herokuapp.com](https://webplayer12.herokuapp.com)

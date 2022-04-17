@@ -1,16 +1,9 @@
 import {Provider} from 'react-redux';
 import {store} from "./redux/store";
 import {Player} from "./components/player/Player";
-import styled from "styled-components";
+import {WrapperCenter} from "./mainStyle";
 
-const WrapperCenter = styled.div`
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-`;
-
-function TestApp() {
+function Main() {
     return (
         <Provider store={store}>
             <WrapperCenter>
@@ -20,4 +13,4 @@ function TestApp() {
     );
 }
 
-export default TestApp;
+export default Main;

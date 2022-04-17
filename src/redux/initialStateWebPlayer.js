@@ -1,4 +1,4 @@
-export const initialState = {
+export const initialStateWebPlayer = {
     play: false,
     stop: false,
     activeSound: false,

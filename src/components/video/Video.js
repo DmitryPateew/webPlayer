@@ -14,22 +14,16 @@ export const Video = forwardRef((prop, videoRef) => {
 
     useEffect(() => {
         getVideo()
-            .then(onVideoLoaded)
+            .then(({url, format}) => {
+                setVideoInfo({url, format});
+            })
             .then(() => {
                 dispatch(loadingAction(true))
             })
-            .catch(onError)
-
+            .catch(() => {
+                dispatch(loadingAction(false));
+                setError(true)})
     }, [])
-
-    const onVideoLoaded = ({url, format}) => {
-        setVideoInfo({url, format});
-    }
-
-    const onError = () => {
-        dispatch(loadingAction(false));
-        setError(true);
-    }
 
     const updateCurrentTimeVolume = ({target: {currentTime}}) => {
         dispatch(currentTimeAction(currentTime));

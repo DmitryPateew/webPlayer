@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './normalize.min.css';
 import './index.css';
-import TestApp from './TestApp';
+import Main from './Main';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <TestApp />
+    <Main />
   </React.StrictMode>,
   document.getElementById('root')
 );

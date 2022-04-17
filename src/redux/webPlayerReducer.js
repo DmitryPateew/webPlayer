@@ -1,7 +1,7 @@
 import {ACTIVE_SOUND, CURRENT_TIME, DURATION, FULL_SCREEN, LOADING, PLAY, REWIND, SOUND_VALUE, STOP} from "./actions";
-import {initialState} from "./initialState";
+import {initialStateWebPlayer} from "./initialStateWebPlayer";
 
-export const reducer = (state = initialState, {type, payload}) => {
+export const webPlayerReducer = (state = initialStateWebPlayer, {type, payload}) => {
     switch (type) {
         case PLAY:
             return {...state, play: !state.play};

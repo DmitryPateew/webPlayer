@@ -1,5 +1,5 @@
 import {createStore} from "redux";
-import {reducer} from "./reducer";
+import {webPlayerReducer} from "./webPlayerReducer";
 
-export const store = createStore(reducer)
+export const store = createStore(webPlayerReducer)
 
