@@ -4,12 +4,12 @@ import {currentTimeAction, durationAction, loadingAction, playAction} from "../.
 import {useDispatch, useSelector} from "react-redux";
 import {Spinner} from "../spinner/Spinner";
 import {ErrorMessage} from "../errorMessage/ErrorMessage";
-import {VideoLayer, VideoWrapper} from "./videoStyle";
+import {Overlay, VideoLayer, VideoWrapper} from "./videoStyle";
 
 export const Video = forwardRef((prop, videoRef) => {
     const [videoInfo, setVideoInfo] = useState({});
     const [error, setError] = useState(false);
-    const {loading} = useSelector(state => state);
+    const {loading, play} = useSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -44,14 +44,17 @@ export const Video = forwardRef((prop, videoRef) => {
             {loading && <Spinner/>}
             {error && <ErrorMessage/>}
             {!loading && !error &&
-                <VideoLayer
-                    onClick={() => dispatch(playAction())}
-                    ref={videoRef}
-                    onTimeUpdate={updateCurrentTime}
-                    onLoadedMetadata={updateDuration}
-                >
-                    <source src={videoInfo.url} type={`video/${videoInfo.format}`}/>
-                </VideoLayer>
+                <>
+                    {!play && <Overlay/>}
+                    <VideoLayer
+                        onClick={() => dispatch(playAction())}
+                        ref={videoRef}
+                        onTimeUpdate={updateCurrentTime}
+                        onLoadedMetadata={updateDuration}
+                    >
+                        <source src={videoInfo.url} type={`video/${videoInfo.format}`}/>
+                    </VideoLayer>
+                </>
             }
         </VideoWrapper>
     )

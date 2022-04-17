@@ -7,9 +7,17 @@ import {Time} from "../time/Time";
 import {StopButton} from "../stopButton/StopButton";
 import {ControlWrapper, GroupWrapper} from "./controlStyle";
 import {playAction} from "../../redux/actionCreator";
+import {ARROW_LEFT, ARROW_RIGHT, KEY_BOARD_ACTION, REWIND_TIME, SPACE} from "../../constant/constant";
 
 export const Control = ({videoRef}) => {
-    const {play, soundValue, stop, currentTime, rewind} = useSelector(state => state);
+    const {
+        play,
+        soundValue,
+        stop,
+        currentTime,
+        rewind,
+        duration
+    } = useSelector(state => state);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -40,23 +48,29 @@ export const Control = ({videoRef}) => {
 
     useEffect(() => {
         const onkeydown = ({key}) => {
-            if (key === 'ArrowLeft') {
-                videoRef.current.currentTime = currentTime - 5;
+            if (key === ARROW_LEFT) {
+                videoRef.current.currentTime = currentTime - REWIND_TIME;
             }
-            if (key === 'ArrowRight') {
-                videoRef.current.currentTime = currentTime + 5;
+            if (key === ARROW_RIGHT) {
+                videoRef.current.currentTime = currentTime + REWIND_TIME;
             }
-            if (key === ' ') {
+            if (key === SPACE) {
                 dispatch(playAction())
             }
         }
 
-        document.addEventListener('keydown', onkeydown);
+        document.addEventListener(KEY_BOARD_ACTION, onkeydown);
 
         return () => {
-            document.removeEventListener('keydown', onkeydown);
+            document.removeEventListener(KEY_BOARD_ACTION, onkeydown);
         };
     }, [currentTime]);
+
+    useEffect(() => {
+        if (currentTime === duration && duration !== 0) {
+            dispatch(playAction())
+        }
+    }, [currentTime])
 
     return (
         <ControlWrapper>
