@@ -56,10 +56,10 @@ export const Control = ({videoRef}) => {
     useEffect(() => {
         const onKeyDown = ({key}) => {
             if (key === ARROW_LEFT) {
-                videoRef.current.currentTime = currentTime - REWIND_TIME;
+                videoRef.current.currentTime = videoRef.current.currentTime - REWIND_TIME;
             }
             if (key === ARROW_RIGHT) {
-                videoRef.current.currentTime = currentTime + REWIND_TIME;
+                videoRef.current.currentTime = videoRef.current.currentTime + REWIND_TIME;
             }
             if (key === SPACE) {
                 dispatch(playAction())
@@ -87,7 +87,7 @@ export const Control = ({videoRef}) => {
             document.removeEventListener(WEB_KIT_FULL_SCREEN_CHANGE, exitHandler);
         };
 
-    }, [currentTime]);
+    }, []);
 
     useEffect(() => {
         if (currentTime === duration && duration !== 0) {

@@ -10,7 +10,7 @@ export const Player = () => {
     return (
         <Wrapper>
             <Video ref={videoRef}/>
-            <ProgressBar videoRef={videoRef}/>
+            <ProgressBar/>
             <Control videoRef={videoRef}/>
         </Wrapper>
     )
